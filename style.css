@@ -1,0 +1,11 @@
+body {
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    display: flex;
+}
+
+.PokemonCard {
+    width: 500px;
+    height: 700px;
+    border: 1px solid black;
+}
