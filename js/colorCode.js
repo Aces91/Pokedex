@@ -17,7 +17,7 @@ let colorCode = [{
     'color-dark-plus': '5a7999'
 },
 {
-    'type': 'poisen',
+    'type': 'poison',
     'color-light': 'b486dc',
     'color-dark': 'aa5599',
     'color-dark-plus': '59317b'
