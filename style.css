@@ -1,11 +1,50 @@
 body {
     margin: 0;
-    font-family: 'Lato', sans-serif;
-    display: flex;
+    font-family: 'Quicksand', sans-serif;
 }
 
-.PokemonCard {
-    width: 500px;
-    height: 700px;
-    border: 1px solid black;
+.navbar {
+    width: 100%;
+    background-color: #F4563A !important;
+}
+
+.d-none {
+    display: none;
+}
+
+/* Pokemon Detailed Card */
+.card {
+    height: 44rem;
+    position: sticky;
+    top: 145px;
+    background-color: #91d08b;
+}
+
+.pokeCardHead {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+#pokeName {
+    padding-left: 20px;
+}
+
+#pokeId {
+    margin-right: 60px;
+}
+
+.pokeContent {
+    display: flex;
+    justify-content: center;
+    height: 200vh;
+}
+
+.pokeImg {
+    height: 250px;
+    width: 250px;
+    position: relative;
+    top: 10px;
+    left: 135px;
 }
