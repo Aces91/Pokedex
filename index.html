@@ -20,10 +20,11 @@
 
     <link rel="stylesheet" href="style.css" />
     <script src="script.js"></script>
+    <script src="./js/colorCode.js"></script>
   </head>
   <body onload="loadPokemon()">
     <!-- NavBar, Head -->
-    <nav class="navbar bg-light">
+    <nav class="navbar bg-white">
       <div class="container-fluid">
         <a class="navbar-brand">Pokemon</a>
         <form class="d-flex" role="search">
@@ -38,18 +39,30 @@
       </div>
     </nav>
 
-    <div id="pokeContent" class="pokeContent">
+    <div id="pokeContent" class="pokeContent bg-light">
       <!-- Detailed Card for Pokemon -->
-      <div id="pokeCard" class="card" style="width: 27rem">
+      <div
+        id="pokeCard"
+        class="card"
+        style="width: 27rem; background-color: #91d08b"
+      >
         <div class="pokeCardHead">
           <h3 id="pokeName">name</h3>
           <h3 id="pokeId">#</h3>
         </div>
         <img id="pokeImg" class="pokeImg" src="./img/pokemon-fav.png" />
-        <div id="pokeStats" class="pokeStats"></div>
+        <img class="pokeBg" src="./img/pokemon-bg.png " />
+        <div id="pokeStats" class="pokeStats" style="border-color: #3a7036">
+          <div class="pokeType">
+            <p id="pokeType1" style="background-color: #77cc55;"></p>
+            <p id="pokeType2" style="background-color: #aa5599;"></p>
+          </div>
+        </div>
+        <div class="pokeTabs">
+          <div id="pokeTabBase" style="border-color: #3a7036"></div>
+          <div id="pokeTabStat" style="border-color: #3a7036"></div>
+        </div>
       </div>
     </div>
-
-
   </body>
 </html>

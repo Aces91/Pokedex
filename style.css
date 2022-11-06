@@ -1,50 +1,116 @@
 body {
-    margin: 0;
-    font-family: 'Quicksand', sans-serif;
+  margin: 0;
+  font-family: "Quicksand", sans-serif;
 }
 
 .navbar {
-    width: 100%;
-    background-color: #F4563A !important;
+  width: 100%;
+  box-shadow: 0px 1px 8px rgb(0 0 0 / 30%);
 }
 
 .d-none {
-    display: none;
+  display: none;
 }
 
 /* Pokemon Detailed Card */
 .card {
-    height: 44rem;
-    position: sticky;
-    top: 145px;
-    background-color: #91d08b;
+  height: 44rem;
+  position: sticky;
+  top: 145px;
+  border: 1px solid darkgray;
+  border-radius: 15px;
 }
 
 .pokeCardHead {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: space-between;
 }
 
 #pokeName {
-    padding-left: 20px;
+  padding-left: 20px;
 }
 
 #pokeId {
-    margin-right: 60px;
+  margin-right: 60px;
 }
 
 .pokeContent {
-    display: flex;
-    justify-content: center;
-    height: 200vh;
+  display: flex;
+  justify-content: center;
+  height: 200vh;
 }
 
 .pokeImg {
-    height: 250px;
-    width: 250px;
-    position: relative;
-    top: 10px;
-    left: 135px;
+  height: 250px;
+  width: 250px;
+  position: relative;
+  top: 10px;
+  left: 135px;
+  z-index: 5;
+}
+
+.pokeBg {
+  z-index: -1;
+  position: relative;
+  top: -260px;
+  height: 300px;
+  width: 300px;
+  left: 30px;
+  mix-blend-mode: soft-light;
+}
+
+.pokeStats {
+  margin: 1px;
+  padding: 12px;
+  background-color: white;
+  height: 350px;
+  z-index: 1;
+  margin-top: -320px;
+  border-radius: 16px 16px 0 0;
+  border: 1px solid;
+  box-shadow: 0px -1px 3px rgba(0,0,0,0.4);
+  display: flex;
+}
+
+.pokeTabs {
+  display: flex;
+  flex-direction: row;
+}
+
+#pokeTabBase {
+  height: 60px;
+  background-color: white;
+  margin-left: 1px;
+  padding: 5px;
+  border-radius: 0 0 0 15px;
+  width: 50%;
+  border: 1px solid;
+  cursor: pointer;
+}
+
+#pokeTabStat {
+  height: 60px;
+  background-color: white;
+  margin-right: 1px;
+  padding: 5px;
+  border-radius: 0 0 15px 0;
+  width: 50%;
+  border: 1px solid;
+  cursor: pointer;
+}
+
+.pokeType {
+    display: flex;
+    height: 30px;
+}
+
+.pokeType p {
+    margin-right: 8px;
+    margin-left: 8px;
+    padding-bottom: 24px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 12px;
 }
