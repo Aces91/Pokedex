@@ -1,12 +1,13 @@
 let currentPokemon;
 let pokemons = 25;
 let aboutPokemon = true;
+const stats = ['hp', 'attack', 'defense', 'specAttack', 'specDefense', 'speed'];
 
 /**
  * lädt alle notwendigen informationen aus der API
  */
 async function loadPokemon() {
-  let url = `https://pokeapi.co/api/v2/pokemon/25`;
+  let url = `https://pokeapi.co/api/v2/pokemon/34`;
   let response = await fetch(url);
   currentPokemon = await response.json();
 
@@ -22,6 +23,7 @@ function renderPokeInfo() {
   renderIdWithleadingZero();
   pokemonTypeColor();
   renderPokeBody();
+  calculateStats();
 }
 
 /**
@@ -65,25 +67,15 @@ function searchTypeColor(type, type1) {
       "pokeType1"
     ).style = `background-color: #${type["color-dark"]};`;
     document.getElementById(
-      "pokeType3"
-    ).style = `background-color: #${type["color-dark"]};`;
-    document.getElementById(
       "pokeCard"
     ).style = `background-color: #${type["color-light"]};`;
     pokeFrameColor(type);
   }
-  // if (type2 == type['type']) {
-  //   document.getElementById(
-  //     "pokeType2"
-  //   ).style = `background-color: #${type["color-dark"]};`;
-  // }
 }
 
 function renderPokeType(type1, type2) {
   document.getElementById('pokeType1').innerHTML = type1;
-  document.getElementById('pokeType3').innerHTML = type1;
   //document.getElementById('pokeType2').innerHTML = type2;
-  //document.getElementById('pokeType4').innerHTML = type2;
 }
 
 function pokeFrameColor(type) {
@@ -122,4 +114,20 @@ function togglePokeTabs(index) {
     document.getElementById('pokeBase').classList.remove('d-none');
     document.getElementById('pokeStats').classList.add('d-none');
   }
+}
+
+function calculateStats() {
+  for (let i = 0; i < currentPokemon['stats'].length; i++) {
+    let test = currentPokemon['stats'][i]['base_stat'];
+    let percent = (test/160) * 100;
+    renderCircleBar(percent, i);
+  }
+}
+
+ function renderCircleBar(percent, index) {
+    let output = document.getElementById(`${stats[index]}`);
+    let output2 = document.getElementById(`${stats[index]}-text`);
+    output.style = `background-image: conic-gradient(#f01214 ${percent.toFixed(0)}%, #fff5ef 0)`;
+    output2.innerHTML = currentPokemon['stats'][index]['base_stat'];
+    return;
 }
