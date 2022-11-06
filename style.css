@@ -36,6 +36,11 @@ body {
   margin-right: 60px;
 }
 
+.button-upgrade {
+  height: 286px;
+  width: 8% !important;
+}
+
 .pokeContent {
   display: flex;
   justify-content: center;
@@ -61,11 +66,12 @@ body {
   mix-blend-mode: soft-light;
 }
 
-.pokeStats {
+.pokeBase {
   margin: 1px;
   padding: 12px;
   background-color: white;
   height: 350px;
+  width: 428px;
   z-index: 1;
   margin-top: -320px;
   border-radius: 16px 16px 0 0;
@@ -87,6 +93,14 @@ body {
   width: 50%;
   border: 1px solid;
   cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#pokeTabBase h3 {
+  margin: 0;
 }
 
 #pokeTabStat {
@@ -98,6 +112,14 @@ body {
   width: 50%;
   border: 1px solid;
   cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#pokeTabStat h3 {
+  margin: 0;
 }
 
 .pokeType {
@@ -108,7 +130,7 @@ body {
 
 .pokeType p {
     margin-right: 8px;
-    margin-left: 8px;
+    margin-left: 28px;
     padding-bottom: 24px;
     padding-left: 15px;
     padding-right: 15px;
@@ -124,8 +146,10 @@ body {
 .pokeBody div {
   margin-top: 20px;
   width: 134px;
+  height: 115px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }

@@ -50,12 +50,31 @@
           <h3 id="pokeName">name</h3>
           <h3 id="pokeId">#</h3>
         </div>
+        <button
+          class="carousel-dark carousel-control-prev button-upgrade"
+          type="button"
+          data-bs-target="#carouselExampleDark"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-dark carousel-control-next button-upgrade"
+          type="button"
+          data-bs-target="#carouselExampleDark"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
         <img id="pokeImg" class="pokeImg" src="./img/pokemon-fav.png" />
         <img class="pokeBg" src="./img/pokemon-bg.png " />
-        <div id="pokeStats" class="pokeStats" style="border-color: #3a7036">
+        <!-- About Card Detailes -->
+        <div id="pokeBase" class="pokeBase" style="border-color: #3a7036">
           <div class="pokeType">
             <p id="pokeType1" style="background-color: #77cc55"></p>
-            <p id="pokeType2" style="background-color: transparent"></p>
+            <!-- <p id="pokeType2" style="background-color: transparent"></p> -->
           </div>
           <div class="pokeBody">
             <div class="text-secondary">
@@ -67,7 +86,7 @@
               class="border-end border-start border-3 text-secondary"
               style="border-color: #000000 !important"
             >
-              <h3 id="pokeHeight">all </h3>
+              <h3 id="pokeHeight">all</h3>
               <p>Height</p>
             </div>
             <div class="text-secondary">
@@ -76,9 +95,29 @@
             </div>
           </div>
         </div>
+
+        <!-- Base Stats card Detailes -->
+        <div id="pokeStats" class="pokeBase d-none" style="border-color: #3a7036">
+          <div class="pokeType">
+            <p id="pokeType3" style="background-color: #77cc55"></p>
+            <!-- <p id="pokeType4" style="background-color: transparent"></p> -->
+          </div>
+        </div>
         <div class="pokeTabs">
-          <div id="pokeTabBase" style="border-color: #3a7036"></div>
-          <div id="pokeTabStat" style="border-color: #3a7036"></div>
+          <div
+            id="pokeTabBase"
+            style="border-color: #3a7036; background-color: transparent"
+            onclick="togglePokeTabs(0)"
+          >
+            <h3>About</h3>
+          </div>
+          <div
+            id="pokeTabStat"
+            style="border-color: #3a7036; background-color: white"
+            onclick="togglePokeTabs(1)"
+          >
+            <h3>Base Stats</h3>
+          </div>
         </div>
       </div>
     </div>
