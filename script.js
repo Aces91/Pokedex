@@ -2,18 +2,32 @@ let currentPokemon;
 let pokemons = 25;
 let aboutPokemon = true;
 const stats = ['hp', 'attack', 'defense', 'specAttack', 'specDefense', 'speed'];
+let manyPokemon = 152;
 
+
+function init() {
+  loadPokemon();
+}
 /**
  * lädt alle notwendigen informationen aus der API
  */
 async function loadPokemon() {
-  let url = `https://pokeapi.co/api/v2/pokemon/34`;
+  let url = `https://pokeapi.co/api/v2/pokemon/4`;
   let response = await fetch(url);
   currentPokemon = await response.json();
 
-  console.log(currentPokemon);
   renderPokeInfo();
 }
+
+/**
+ * render Overview
+ */
+async function renderPokemonOverview() {
+  for (let i = 1; i < manyPokemon; i++) {
+    loadPokemon(i);
+  }
+}
+
 
 /**
  * stellt alle infos die wir aus der API beziehen dar
@@ -23,16 +37,13 @@ function renderPokeInfo() {
   renderIdWithleadingZero();
   pokemonTypeColor();
   renderPokeBody();
-  calculateStats();
 }
 
 /**
  * Renders only the Header and Image of Detailed Card
  */
 function renderPokeCardHead() {
-  let name =
-    currentPokemon["name"].charAt(0).toUpperCase() +
-    currentPokemon["name"].slice(1); // first character of string to upper Case.
+  let name = currentPokemon["name"].charAt(0).toUpperCase() + currentPokemon["name"].slice(1); // first character of string to upper Case.
   let img =
     currentPokemon["sprites"]["other"]["official-artwork"]["front_default"];
 
@@ -46,7 +57,7 @@ function renderPokeCardHead() {
  */
 function pokemonTypeColor() {
   let type1 = currentPokemon["types"]["0"]["type"]["name"];
-  //let type2 = currentPokemon["types"]["1"]["type"]["name"];
+  let type2 = currentPokemon["types"]["1"]["type"]["name"];
   for (let i = 0; i < colorCode.length; i++) {
     let type = colorCode[i];
     
@@ -63,19 +74,15 @@ function pokemonTypeColor() {
  */
 function searchTypeColor(type, type1) {
   if (type1 == type['type']) {
-    document.getElementById(
-      "pokeType1"
-    ).style = `background-color: #${type["color-dark"]};`;
-    document.getElementById(
-      "pokeCard"
-    ).style = `background-color: #${type["color-light"]};`;
+    document.getElementById("pokeType1").style = `background-color: #${type["color-dark"]};`;
+    document.getElementById("pokeCard").style = `background-color: #${type["color-light"]};`;
     pokeFrameColor(type);
   }
 }
 
 function renderPokeType(type1, type2) {
   document.getElementById('pokeType1').innerHTML = type1;
-  //document.getElementById('pokeType2').innerHTML = type2;
+  document.getElementById('pokeType2').innerHTML = type2;
 }
 
 function pokeFrameColor(type) {
@@ -108,6 +115,7 @@ function togglePokeTabs(index) {
     document.getElementById('pokeTabBase').style = 'background-color: white';
     document.getElementById('pokeBase').classList.add('d-none');
     document.getElementById('pokeStats').classList.remove('d-none');
+    calculateStats();
   } else {
     document.getElementById('pokeTabStat').style = 'background-color: white';
     document.getElementById('pokeTabBase').style = 'background-color: transparent';

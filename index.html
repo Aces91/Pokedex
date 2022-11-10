@@ -19,10 +19,11 @@
     ></script>
 
     <link rel="stylesheet" href="style.css" />
+    <script src="js/template.js"></script>
     <script src="script.js"></script>
-    <script src="./js/colorCode.js"></script>
+    <script src="js/colorCode.js"></script>
   </head>
-  <body onload="loadPokemon()">
+  <body onload="init()">
     <!-- NavBar, Head -->
     <nav class="navbar bg-white">
       <div class="container-fluid">
@@ -40,6 +41,7 @@
     </nav>
 
     <div id="pokeContent" class="pokeContent bg-light">
+      
       <!-- Detailed Card for Pokemon -->
       <div
         id="pokeCard"
@@ -47,8 +49,8 @@
         style="width: 27rem; background-color: #91d08b"
       >
         <div class="pokeCardHead">
-          <h3 id="pokeName">name</h3>
-          <h3 id="pokeId">#</h3>
+          <h3 id="pokeName" class="namePokemon">name</h3>
+          <h3 id="pokeId" class="idPoke">#</h3>
         </div>
         <button
           class="carousel-dark carousel-control-prev button-upgrade"
@@ -74,7 +76,7 @@
         <div id="pokeBase" class="pokeBase" style="border-color: #3a7036">
           <div class="pokeType">
             <p id="pokeType1" style="background-color: #77cc55"></p>
-            <!-- <p id="pokeType2" style="background-color: transparent"></p> -->
+            <p id="pokeType2" style="background-color: transparent"></p>
           </div>
           <div class="pokeBody">
             <div class="text-secondary">

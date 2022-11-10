@@ -5,6 +5,8 @@ body {
 
 .navbar {
   width: 100%;
+  position: fixed;
+  z-index: 10;
   box-shadow: 0px 1px 8px rgb(0 0 0 / 30%);
 }
 
@@ -12,13 +14,39 @@ body {
   display: none;
 }
 
+p {
+  margin-bottom: 0;
+}
+
 /* Pokemon Detailed Card */
 .card {
   height: 44rem;
-  position: sticky;
+  position: fixed;
   top: 145px;
   border: 1px solid darkgray;
   border-radius: 15px;
+  z-index: 3;
+}
+
+.card2 {
+  position: sticky;
+  padding: 10px;
+  height: 12rem;
+  border: 1px solid darkgray;
+  border-radius: 15px;
+  width: 16rem;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.card2:hover {
+  transform: scale(1.08);
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  height: 2rem;
 }
 
 .pokeCardHead {
@@ -28,12 +56,20 @@ body {
   justify-content: space-between;
 }
 
-#pokeName {
+.namePokemon {
   padding-left: 20px;
 }
 
-#pokeId {
+.pokeName {
+  padding-left: 0;
+}
+
+.idPoke {
   margin-right: 60px;
+}
+
+.pokeId {
+  margin-right: 0;
 }
 
 .button-upgrade {
@@ -44,7 +80,9 @@ body {
 .pokeContent {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   height: 200vh;
+  padding-top: 65px;
 }
 
 .pokeImg {
@@ -56,14 +94,38 @@ body {
   z-index: 5;
 }
 
+.pokeImg2 {
+  height: 160px;
+  position: absolute;
+  z-index: 2;
+  left: 80px;
+  bottom: 0px;
+}
+
+.pokeImg2:hover {
+  transform: scaleX(-1);
+}
+
 .pokeBg {
   z-index: -1;
   position: relative;
-  top: -260px;
   height: 300px;
   width: 300px;
-  left: 30px;
+  top: -220px;
+  left: 20px;
+  transform: rotate(-15deg);
   mix-blend-mode: soft-light;
+}
+
+.pokeBg2 {
+  height: 160px;
+  position: absolute;
+  left: 35px;
+  bottom: 5px;
+  mix-blend-mode: soft-light;
+  transform: rotate(-20deg);
+  opacity: 50%;
+  z-index: -1;
 }
 
 .pokeBase {
@@ -76,7 +138,7 @@ body {
   margin-top: -320px;
   border-radius: 16px 16px 0 0;
   border: 1px solid;
-  box-shadow: 0px -1px 3px rgba(0,0,0,0.4);
+  box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .pokeTabs {
@@ -123,18 +185,31 @@ body {
 }
 
 .pokeType {
-    display: flex;
-    height: 30px;
-    margin-top: 10px;
+  display: flex;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.overviewType {
+  margin-left: 6px; 
+  width: fit-content;
+}
+
+.overviewType p {
+  width: fit-content;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 12px;
+  margin-bottom: 4px;
 }
 
 .pokeType p {
-    margin-right: 8px;
-    margin-left: 28px;
-    padding-bottom: 24px;
-    padding-left: 15px;
-    padding-right: 15px;
-    border-radius: 12px;
+  margin-right: 8px;
+  margin-left: 28px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 12px;
+  padding-bottom: 24px;
 }
 
 .pokeBody {
