@@ -90,7 +90,6 @@ p {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  height: 200vh;
   padding-top: 65px;
 }
 
@@ -283,6 +282,24 @@ p {
 .circle-name p {
   margin-top: 4px;
   text-align: center;
+}
+
+.footer {
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-top: 2px solid grey;
+}
+
+.social-media {
+  margin-top: 12px;
+}
+
+.social-media a{
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 @media (max-width: 560px) {
