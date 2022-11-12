@@ -91,7 +91,7 @@ let colorCode = [{
 {
     'type': 'dragon',
     'color-light': '889ad1',
-    'color-dark': '17766ee',
+    'color-dark': '7766ee',
     'color-dark-plus': '334372'
 },
 {

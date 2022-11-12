@@ -1,53 +1,76 @@
-function templatePokemon(currentPokemon, color, image, name, typeColor1, typeColor2, type2) {
-    return /*html*/ `<div id="pokeCard" class="card2" style="${color}" onclick=showDetail(${currentPokemon["id"]})>
+function templatePokemon(currentPokemon, color, typeColor1, typeColor2, type2) {
+  return /*html*/ `<div id="pokeCard" class="card2" style="${color}" onclick=showDetail(${
+    currentPokemon["id"]})>
       <div class="card-body">
-        <h5 id="pokeName" class="pokeName">${name}</h5>
+        <h5 id="pokeName" class="pokeName">${
+          currentPokemon["name"].charAt(0).toUpperCase() +
+          currentPokemon["name"].slice(1)
+        }</h5>
         <h5 id="pokeId" class="pokeId">#${currentPokemon["id"]}</h5>
       </div>
       <div class="overviewType">
-        <p id="pokeType1" style="${typeColor1}">${currentPokemon["types"]["0"]["type"]["name"]}</p>
+        <p id="pokeType1" style="${typeColor1}">${
+    currentPokemon["types"]["0"]["type"]["name"]
+  }</p>
         <p id="pokeType2" style="${typeColor2}">${type2}</p>
       </div>
       <div>
-        <img id="pokeImg" class="pokeImg2" src=${image} />
+        <img id="pokeImg" class="pokeImg2" src=${
+          currentPokemon["sprites"]["other"]["official-artwork"][
+            "front_default"
+          ]
+        } />
         <img class="pokeBg2" src="./img/pokemon-bg.png "/>
       </div>
     </div>`;
 }
 
-function templateDetailedCard() {
-  return /*html*/ `<div id="pokeCard" class="card" style="width: 27rem; background-color: #91d08b">
+function templateDetailedCard(currentPokemon, currentColor) {
+  return /*html*/ `<div id="detailedCard" class="bg-dark bg-opacity-25 inactive">
+    <div class="bg-dark bg-opacity-25 inactive" onclick=remove()></div>
+    <div id="pokeCard" class="card" style="width: 27rem; ${currentColor}">
   <div class="pokeCardHead">
-    <h3 id="pokeName" class="namePokemon">name</h3>
-    <h3 id="pokeId" class="idPoke">#</h3>
+    <h3 id="pokeName" class="namePokemon">${
+      currentPokemon["name"].charAt(0).toUpperCase() +
+      currentPokemon["name"].slice(1)
+    }</h3>
+    <h3 id="pokeId" class="idPoke">#${currentPokemon["id"]}</h3>
   </div>
-  <button class="carousel-dark carousel-control-prev button-upgrade" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+  <button class="carousel-dark carousel-control-prev button-upgrade" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev" onclick=back(${currentPokemon['id']})>
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
-  <button class="carousel-dark carousel-control-next button-upgrade" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+  <button class="carousel-dark carousel-control-next button-upgrade" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next" onclick=next(${currentPokemon['id']})>
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
-  <img id="pokeImg" class="pokeImg" src="./img/pokemon-fav.png">
+  <img id="pokeImg" class="pokeImg" src=${
+    currentPokemon["sprites"]["other"]["official-artwork"]["front_default"]
+  } />
   <img class="pokeBg" src="./img/pokemon-bg.png ">
   <!-- About Card Detailes -->
   <div id="pokeBase" class="pokeBase" style="border-color: #3a7036">
     <div class="pokeType">
-      <p id="pokeType1" style="background-color: #77cc55"></p>
-      <!-- <p id="pokeType2" style="background-color: transparent"></p> -->
+      <p id="pokeType1" style="${typeColor1}">${
+    currentPokemon["types"]["0"]["type"]["name"]
+  }</p>
+      <p id="pokeType2" style="${typeColor2}">${type2}</p>
     </div>
     <div class="pokeBody">
       <div class="text-secondary">
-        <h3 id="pokeSpecies">all</h3>
+        <h3 id="pokeSpecies">${
+          currentPokemon["abilities"]["0"]["ability"]["name"]
+        }</h3>
         <p>Species</p>
       </div>
       <div id="pokeFrame" class="border-end border-start border-3 text-secondary" style="border-color: #000000 !important">
-        <h3 id="pokeHeight">all</h3>
+        <h3 id="pokeHeight">${(currentPokemon["height"] / 10).toFixed(1)} m</h3>
         <p>Height</p>
       </div>
       <div class="text-secondary">
-        <h3 id="pokeWeight">all lbs</h3>
+        <h3 id="pokeWeight">${(currentPokemon["weight"] * 0.45).toFixed(
+          1
+        )} kg</h3>
         <p>Weight</p>
       </div>
     </div>
@@ -126,5 +149,6 @@ function templateDetailedCard() {
       <h3>Base Stats</h3>
     </div>
   </div>
+</div>
 </div>`;
 }

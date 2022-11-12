@@ -1,141 +1,181 @@
 let currentPokemon;
-let pokemons = 25;
-let aboutPokemon = true;
-const stats = ['hp', 'attack', 'defense', 'specAttack', 'specDefense', 'speed'];
+let currentColor;
+let typeColor1;
+let typeColor2;
+let type2;
+const stats = ["hp", "attack", "defense", "specAttack", "specDefense", "speed"];
 let manyPokemon = 152;
+let maxPokemon = 905;
 
-
+/**
+ * init function calls the Pokemon overview
+ */
 function init() {
-  loadPokemon();
+  renderPokemonOverview();
 }
 /**
- * lädt alle notwendigen informationen aus der API
+ *  loads info's from API
  */
-async function loadPokemon() {
-  let url = `https://pokeapi.co/api/v2/pokemon/4`;
+async function loadPokemon(i) {
+  let url = `https://pokeapi.co/api/v2/pokemon/${[i]}`;
   let response = await fetch(url);
   currentPokemon = await response.json();
 
-  renderPokeInfo();
+  pokemonTypeColor();
+  showPokemon();
 }
 
 /**
  * render Overview
  */
 async function renderPokemonOverview() {
+  document.getElementById("pokeContent").innerHTML = "";
   for (let i = 1; i < manyPokemon; i++) {
-    loadPokemon(i);
+    await loadPokemon(i);
   }
 }
 
-
 /**
- * stellt alle infos die wir aus der API beziehen dar
+ * looks like for all Pokemon that we used in the first time.
  */
-function renderPokeInfo() {
-  renderPokeCardHead();
-  renderIdWithleadingZero();
-  pokemonTypeColor();
-  renderPokeBody();
+function showPokemon() {
+  document.getElementById("pokeContent").innerHTML += templatePokemon(
+    currentPokemon,
+    currentColor,
+    typeColor1,
+    typeColor2,
+    type2
+  );
 }
 
 /**
- * Renders only the Header and Image of Detailed Card
- */
-function renderPokeCardHead() {
-  let name = currentPokemon["name"].charAt(0).toUpperCase() + currentPokemon["name"].slice(1); // first character of string to upper Case.
-  let img =
-    currentPokemon["sprites"]["other"]["official-artwork"]["front_default"];
-
-  document.getElementById("pokeName").innerHTML = name; // Output the name
-  document.getElementById("pokeImg").src = img;
-}
-
-/**
- * holt den typ aus der api und vergleicht in mit der colorCoding liste für Typen Farbcode
- * TODO - Aktuell keine abbruch bedinung bzw. false bedinung programmiert
+ * get the type from api compare it with colorCoding josn
  */
 function pokemonTypeColor() {
   let type1 = currentPokemon["types"]["0"]["type"]["name"];
-  let type2 = currentPokemon["types"]["1"]["type"]["name"];
   for (let i = 0; i < colorCode.length; i++) {
     let type = colorCode[i];
-    
-    searchTypeColor(type, type1);
+
+    if (type1 == type["type"]) {
+      currentColor = `background-color: #${type["color-light"]}`;
+      typeColor1 = `background-color: #${type["color-dark"]};`;
+    }
+
+    searchTypeColor(type, type2);
   }
-  renderPokeType(type1);
 }
 
 /**
- * 
- * @param {string} type is from colorCode.js the type of Pokemon (grass, poisen, steel...)
- * @param {string} type1 is from API first type of pokemon
- * @param {string} type2 is from API second type of pokemon if possible
+ * check if a pokemon have more than 1 type.
  */
-function searchTypeColor(type, type1) {
-  if (type1 == type['type']) {
-    document.getElementById("pokeType1").style = `background-color: #${type["color-dark"]};`;
-    document.getElementById("pokeCard").style = `background-color: #${type["color-light"]};`;
-    pokeFrameColor(type);
+function typo() {
+  if (currentPokemon["types"].length > 1) {
+    type2 = currentPokemon["types"]["1"]["type"]["name"];
+  } else {
+    type2 = "";
+    typeColor2 = "background-color: transparent;";
   }
 }
 
-function renderPokeType(type1, type2) {
-  document.getElementById('pokeType1').innerHTML = type1;
-  document.getElementById('pokeType2').innerHTML = type2;
+/**
+ * Checks the backgroundcolor of the type
+ * @param {string} type is from colorCode.js the type of Pokemon (grass, poisen, steel...)
+ * @param {string} type2 is from API second type of pokemon if possible
+ */
+function searchTypeColor(type, type2) {
+  typo();
+  if (type2 == type["type"]) {
+    typeColor2 = `background-color: #${type["color-dark"]};`;
+  }
 }
 
-function pokeFrameColor(type) {
-  document.getElementById('pokeFrame').style = `border-color: #${type['color-light']} !important`;
+async function showDetail(i) {
+  let url = `https://pokeapi.co/api/v2/pokemon/${[i]}`;
+  let response = await fetch(url);
+  currentPokemon = await response.json();
+
+  pokemonTypeColor();
+  document.getElementById("pokeContent").innerHTML += templateDetailedCard(
+    currentPokemon,
+    currentColor
+  );
 }
 
-function renderPokeBody() {
-  let weightKg = (currentPokemon['weight'] * 0.45);
-  document.getElementById('pokeWeight').innerHTML = `${weightKg.toFixed(1)} kg`;
-
-  let heightM = (currentPokemon['height'] / 10);
-  document.getElementById('pokeHeight').innerHTML = `${heightM.toFixed(1)} m`;
-
-  document.getElementById('pokeSpecies').innerHTML = `${currentPokemon['abilities']['0']['ability']['name']}`;
-} 
-
+/**
+ * TODO - currently not working
+ */
 function renderIdWithleadingZero() {
-  if (currentPokemon['id'] < 10) {
+  if (currentPokemon["id"] < 10) {
     document.getElementById("pokeId").innerHTML = "#00" + currentPokemon["id"];
-  } else if (currentPokemon['id'] < 100 && currentPokemon['id'] >= 10) {
+  } else if (currentPokemon["id"] < 100 && currentPokemon["id"] >= 10) {
     document.getElementById("pokeId").innerHTML = "#0" + currentPokemon["id"];
   } else {
     document.getElementById("pokeId").innerHTML = "#" + currentPokemon["id"];
-  } 
+  }
 }
 
 function togglePokeTabs(index) {
   if (index == 1) {
-    document.getElementById('pokeTabStat').style = 'background-color: transparent';
-    document.getElementById('pokeTabBase').style = 'background-color: white';
-    document.getElementById('pokeBase').classList.add('d-none');
-    document.getElementById('pokeStats').classList.remove('d-none');
+    document.getElementById("pokeTabStat").style =
+      "background-color: transparent";
+    document.getElementById("pokeTabBase").style = "background-color: white";
+    document.getElementById("pokeBase").classList.add("d-none");
+    document.getElementById("pokeStats").classList.remove("d-none");
     calculateStats();
   } else {
-    document.getElementById('pokeTabStat').style = 'background-color: white';
-    document.getElementById('pokeTabBase').style = 'background-color: transparent';
-    document.getElementById('pokeBase').classList.remove('d-none');
-    document.getElementById('pokeStats').classList.add('d-none');
+    document.getElementById("pokeTabStat").style = "background-color: white";
+    document.getElementById("pokeTabBase").style =
+      "background-color: transparent";
+    document.getElementById("pokeBase").classList.remove("d-none");
+    document.getElementById("pokeStats").classList.add("d-none");
   }
 }
 
 function calculateStats() {
-  for (let i = 0; i < currentPokemon['stats'].length; i++) {
-    let test = currentPokemon['stats'][i]['base_stat'];
-    let percent = (test/160) * 100;
+  for (let i = 0; i < currentPokemon["stats"].length; i++) {
+    let test = currentPokemon["stats"][i]["base_stat"];
+    let percent = (test / 160) * 100;
     renderCircleBar(percent, i);
   }
 }
 
- function renderCircleBar(percent, index) {
-    let output = document.getElementById(`${stats[index]}`);
-    let output2 = document.getElementById(`${stats[index]}-text`);
-    output.style = `background-image: conic-gradient(#f01214 ${percent.toFixed(0)}%, #fff5ef 0)`;
-    output2.innerHTML = currentPokemon['stats'][index]['base_stat'];
-    return;
+function renderCircleBar(percent, index) {
+  let output = document.getElementById(`${stats[index]}`);
+  let output2 = document.getElementById(`${stats[index]}-text`);
+  output.style = `background-image: conic-gradient(#f01214 ${percent.toFixed(
+    0
+  )}%, #fff5ef 0)`;
+  output2.innerHTML = currentPokemon["stats"][index]["base_stat"];
+  return;
+}
+
+function remove() {
+  document.getElementById("detailedCard").remove();
+}
+
+function back(i) {
+  i--;
+  if (i < 1) {
+    remove();
+  } else {
+    remove();
+    showDetail(i);
+  }
+}
+
+function next(i) {
+  i++;
+  if (i > manyPokemon - 1) {
+    remove();
+  } else {
+    remove();
+    showDetail(i);
+  }
+}
+
+async function filterNames() {
+  let search = document.getElementById("search").value;
+  search = search.toLowerCase();
+  console.log(search);
+
 }
