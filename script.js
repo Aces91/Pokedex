@@ -3,14 +3,17 @@ let currentColor;
 let typeColor1;
 let typeColor2;
 let type2;
+let currentList = [];
 const stats = ["hp", "attack", "defense", "specAttack", "specDefense", "speed"];
-let manyPokemon = 152;
+let pokemonStart = 1;
+let pokemonEnd = 152;
 let maxPokemon = 905;
 
 /**
  * init function calls the Pokemon overview
  */
 function init() {
+  document.getElementById("pokeContent").innerHTML = "";
   renderPokemonOverview();
 }
 /**
@@ -20,6 +23,7 @@ async function loadPokemon(i) {
   let url = `https://pokeapi.co/api/v2/pokemon/${[i]}`;
   let response = await fetch(url);
   currentPokemon = await response.json();
+  currentList.push(currentPokemon);
 
   pokemonTypeColor();
   showPokemon();
@@ -29,8 +33,7 @@ async function loadPokemon(i) {
  * render Overview
  */
 async function renderPokemonOverview() {
-  document.getElementById("pokeContent").innerHTML = "";
-  for (let i = 1; i < manyPokemon; i++) {
+  for (let i = pokemonStart; i < pokemonEnd; i++) {
     await loadPokemon(i);
   }
 }
@@ -60,7 +63,6 @@ function pokemonTypeColor() {
       currentColor = `background-color: #${type["color-light"]}`;
       typeColor1 = `background-color: #${type["color-dark"]};`;
     }
-
     searchTypeColor(type, type2);
   }
 }
@@ -165,7 +167,7 @@ function back(i) {
 
 function next(i) {
   i++;
-  if (i > manyPokemon - 1) {
+  if (i > pokemonEnd - 1) {
     remove();
   } else {
     remove();
@@ -176,6 +178,33 @@ function next(i) {
 async function filterNames() {
   let search = document.getElementById("search").value;
   search = search.toLowerCase();
-  console.log(search);
 
+  searching(search);
+}
+
+function searching(search) {
+  document.getElementById("pokeContent").innerHTML = "";
+  for (let i = 0; i < currentList.length; i++) {
+    currentPokemon = currentList[i];
+    pokemonTypeColor();
+    if (currentPokemon["name"].includes(search)) {
+      document.getElementById("pokeContent").innerHTML += templatePokemon(
+        currentPokemon,
+        currentColor,
+        typeColor1,
+        typeColor2,
+        type2
+      );
+    }
+  }
+}
+
+async function loadMore() {
+  pokemonStart = pokemonEnd;
+  if (pokemonEnd <= 905) {
+    pokemonEnd = pokemonEnd +100;
+  } else {
+    pokemonEnd = maxPokemon;
+  }
+  await renderPokemonOverview();
 }
