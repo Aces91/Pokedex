@@ -21,16 +21,18 @@ p {
 .inactive {
   display: flex;
   justify-content: center;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
+  top: 0;
   position: fixed;
   z-index: 2;
+  overflow-y: auto;
 }
 
 /* Pokemon Detailed Card */
 .card {
   height: 44rem;
-  position: fixed;
+  position: relative;
   top: 145px;
   border: 1px solid darkgray;
   border-radius: 15px;

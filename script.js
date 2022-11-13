@@ -6,7 +6,7 @@ let type2;
 let currentList = [];
 const stats = ["hp", "attack", "defense", "specAttack", "specDefense", "speed"];
 let pokemonStart = 1;
-let pokemonEnd = 152;
+let pokemonEnd = 30;
 let maxPokemon = 905;
 
 /**
@@ -16,6 +16,7 @@ function init() {
   document.getElementById("pokeContent").innerHTML = "";
   renderPokemonOverview();
 }
+
 /**
  *  loads info's from API
  */
@@ -29,9 +30,6 @@ async function loadPokemon(i) {
   showPokemon();
 }
 
-/**
- * render Overview
- */
 async function renderPokemonOverview() {
   for (let i = pokemonStart; i < pokemonEnd; i++) {
     await loadPokemon(i);
@@ -51,9 +49,6 @@ function showPokemon() {
   );
 }
 
-/**
- * get the type from api compare it with colorCoding josn
- */
 function pokemonTypeColor() {
   let type1 = currentPokemon["types"]["0"]["type"]["name"];
   for (let i = 0; i < colorCode.length; i++) {
@@ -67,10 +62,7 @@ function pokemonTypeColor() {
   }
 }
 
-/**
- * check if a pokemon have more than 1 type.
- */
-function typo() {
+function checkTypo() {
   if (currentPokemon["types"].length > 1) {
     type2 = currentPokemon["types"]["1"]["type"]["name"];
   } else {
@@ -85,7 +77,7 @@ function typo() {
  * @param {string} type2 is from API second type of pokemon if possible
  */
 function searchTypeColor(type, type2) {
-  typo();
+  checkTypo();
   if (type2 == type["type"]) {
     typeColor2 = `background-color: #${type["color-dark"]};`;
   }
@@ -141,9 +133,6 @@ function togglePokeTabs(index) {
   }
 }
 
-/**
- * calculate the ring fill by the highest stat i found
- */
 function calculateStats() {
   for (let i = 0; i < currentPokemon["stats"].length; i++) {
     let test = currentPokemon["stats"][i]["base_stat"];
@@ -154,9 +143,9 @@ function calculateStats() {
 
 /**
  * render the circles that we caluculate above in the code
- * @param {number} percent 
- * @param {number} index 
- * @returns 
+ * @param {number} percent
+ * @param {number} index
+ * @returns
  */
 function renderCircleBar(percent, index) {
   let output = document.getElementById(`${stats[index]}`);
@@ -168,17 +157,13 @@ function renderCircleBar(percent, index) {
   return;
 }
 
-/**
- * remove the detailed card if we click on the background
- */
 function remove() {
   document.getElementById("detailedCard").remove();
 }
 
-
 /**
  * jump a pokemon id down
- * @param {integer} i 
+ * @param {integer} i
  */
 function back(i) {
   i--;
@@ -192,7 +177,7 @@ function back(i) {
 
 /**
  * jump a pokemon id up
- * @param {integer} i 
+ * @param {integer} i
  */
 function next(i) {
   i++;
@@ -204,9 +189,6 @@ function next(i) {
   }
 }
 
-/**
- * read the inputfield value and convert it to small letters
- */
 async function filterNames() {
   let search = document.getElementById("search").value;
   search = search.toLowerCase();
@@ -215,9 +197,9 @@ async function filterNames() {
 }
 
 /**
- * check if the value search is in the currentList with Pokemon. 
+ * check if the value search is in the currentList with Pokemon.
  * Local Array is filled by first load
- * @param {string} search 
+ * @param {string} search
  */
 function searching(search) {
   document.getElementById("pokeContent").innerHTML = "";
@@ -242,9 +224,15 @@ function searching(search) {
 async function loadMore() {
   pokemonStart = pokemonEnd;
   if (pokemonEnd <= 905) {
-    pokemonEnd = pokemonEnd +100;
+    pokemonEnd = pokemonEnd + 20;
   } else {
     pokemonEnd = maxPokemon;
   }
   await renderPokemonOverview();
+}
+
+window.onscroll = function() {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    loadMore();
+  }
 }
