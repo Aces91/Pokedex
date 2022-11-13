@@ -91,6 +91,10 @@ function searchTypeColor(type, type2) {
   }
 }
 
+/**
+ * shows the detail of the number of pokemon in pokedex
+ * @param {number} i - id number of pokemon
+ */
 async function showDetail(i) {
   let url = `https://pokeapi.co/api/v2/pokemon/${[i]}`;
   let response = await fetch(url);
@@ -116,6 +120,10 @@ function renderIdWithleadingZero() {
   }
 }
 
+/**
+ * change the view in the detailed carad from base to stats
+ * @param {number} index -comes from the html itself only 0 and 1
+ */
 function togglePokeTabs(index) {
   if (index == 1) {
     document.getElementById("pokeTabStat").style =
@@ -133,6 +141,9 @@ function togglePokeTabs(index) {
   }
 }
 
+/**
+ * calculate the ring fill by the highest stat i found
+ */
 function calculateStats() {
   for (let i = 0; i < currentPokemon["stats"].length; i++) {
     let test = currentPokemon["stats"][i]["base_stat"];
@@ -141,6 +152,12 @@ function calculateStats() {
   }
 }
 
+/**
+ * render the circles that we caluculate above in the code
+ * @param {number} percent 
+ * @param {number} index 
+ * @returns 
+ */
 function renderCircleBar(percent, index) {
   let output = document.getElementById(`${stats[index]}`);
   let output2 = document.getElementById(`${stats[index]}-text`);
@@ -151,10 +168,18 @@ function renderCircleBar(percent, index) {
   return;
 }
 
+/**
+ * remove the detailed card if we click on the background
+ */
 function remove() {
   document.getElementById("detailedCard").remove();
 }
 
+
+/**
+ * jump a pokemon id down
+ * @param {integer} i 
+ */
 function back(i) {
   i--;
   if (i < 1) {
@@ -165,6 +190,10 @@ function back(i) {
   }
 }
 
+/**
+ * jump a pokemon id up
+ * @param {integer} i 
+ */
 function next(i) {
   i++;
   if (i > pokemonEnd - 1) {
@@ -175,6 +204,9 @@ function next(i) {
   }
 }
 
+/**
+ * read the inputfield value and convert it to small letters
+ */
 async function filterNames() {
   let search = document.getElementById("search").value;
   search = search.toLowerCase();
@@ -182,6 +214,11 @@ async function filterNames() {
   searching(search);
 }
 
+/**
+ * check if the value search is in the currentList with Pokemon. 
+ * Local Array is filled by first load
+ * @param {string} search 
+ */
 function searching(search) {
   document.getElementById("pokeContent").innerHTML = "";
   for (let i = 0; i < currentList.length; i++) {
@@ -199,6 +236,9 @@ function searching(search) {
   }
 }
 
+/**
+ * load more button function that we can load pokemons step by step an not all 905 pokemons at the same time
+ */
 async function loadMore() {
   pokemonStart = pokemonEnd;
   if (pokemonEnd <= 905) {

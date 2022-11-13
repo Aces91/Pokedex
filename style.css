@@ -319,6 +319,7 @@ p {
   }
 
   .card {
+    top: 115px;
     transform: scale(0.7);
   }
 }
