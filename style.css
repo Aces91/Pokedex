@@ -143,7 +143,7 @@ p {
   padding: 12px;
   background-color: white;
   height: 350px;
-  width: 428px;
+  width: 100%;
   z-index: 1;
   margin-top: -320px;
   border-radius: 16px 16px 0 0;
@@ -323,5 +323,16 @@ p {
   .card {
     top: 115px;
     transform: scale(0.7);
+  }
+
+  .circle {
+    position: relative;
+    width: 75px;
+    height: 75px;
+  }
+  
+  .circle .inner-circle {
+    width: 65px;
+    height: 65px;
   }
 }

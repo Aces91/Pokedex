@@ -232,7 +232,9 @@ async function loadMore() {
 }
 
 window.onscroll = function() {
-  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-    loadMore();
+  if (document.getElementById("search").value <= 3) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      loadMore();
+    }
   }
 }
