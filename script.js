@@ -8,6 +8,7 @@ const stats = ["hp", "attack", "defense", "specAttack", "specDefense", "speed"];
 let pokemonStart = 1;
 let pokemonEnd = 30;
 let maxPokemon = 905;
+let loadScroll = false;
 
 /**
  * init function calls the Pokemon overview
@@ -24,10 +25,11 @@ async function loadPokemon(i) {
   let url = `https://pokeapi.co/api/v2/pokemon/${[i]}`;
   let response = await fetch(url);
   currentPokemon = await response.json();
-  currentList.push(currentPokemon);
 
-  pokemonTypeColor();
-  showPokemon();
+  await pokemonTypeColor();
+  await showPokemon();
+
+  currentList.push(currentPokemon);
 }
 
 async function renderPokemonOverview() {
@@ -39,7 +41,7 @@ async function renderPokemonOverview() {
 /**
  * looks like for all Pokemon that we used in the first time.
  */
-function showPokemon() {
+async function showPokemon() {
   document.getElementById("pokeContent").innerHTML += templatePokemon(
     currentPokemon,
     currentColor,
@@ -49,7 +51,7 @@ function showPokemon() {
   );
 }
 
-function pokemonTypeColor() {
+async function pokemonTypeColor() {
   let type1 = currentPokemon["types"]["0"]["type"]["name"];
   for (let i = 0; i < colorCode.length; i++) {
     let type = colorCode[i];
@@ -189,7 +191,7 @@ function next(i) {
   }
 }
 
-async function filterNames() {
+function filterNames() {
   let search = document.getElementById("search").value;
   search = search.toLowerCase();
 
@@ -224,17 +226,25 @@ function searching(search) {
 async function loadMore() {
   pokemonStart = pokemonEnd;
   if (pokemonEnd <= 905) {
-    pokemonEnd = pokemonEnd + 20;
+    pokemonEnd = pokemonEnd + 30;
   } else {
     pokemonEnd = maxPokemon;
   }
-  await renderPokemonOverview();
+   await renderPokemonOverview();
 }
 
-window.onscroll = function() {
+
+window.onscroll = async function () {
   if (document.getElementById("search").value <= 3) {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      loadMore();
+    if (
+      (window.innerHeight + window.scrollY) >= document.body.offsetHeight &&
+      loadScroll == false
+    ) {
+      loadScroll = true;
+      await loadMore();
     }
   }
-}
+  setTimeout(() => {
+    loadScroll = false;
+  }, 2500);
+};
