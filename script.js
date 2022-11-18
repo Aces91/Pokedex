@@ -6,7 +6,7 @@ let type2;
 let currentList = [];
 const stats = ["hp", "attack", "defense", "specAttack", "specDefense", "speed"];
 let pokemonStart = 1;
-let pokemonEnd = 30;
+let pokemonEnd = 50;
 let maxPokemon = 905;
 let loadScroll = false;
 
@@ -226,25 +226,20 @@ function searching(search) {
 async function loadMore() {
   pokemonStart = pokemonEnd;
   if (pokemonEnd <= 905) {
-    pokemonEnd = pokemonEnd + 30;
+    pokemonEnd = pokemonEnd + 40;
   } else {
     pokemonEnd = maxPokemon;
   }
-   await renderPokemonOverview();
+  await renderPokemonOverview();
 }
-
 
 window.onscroll = async function () {
   if (document.getElementById("search").value <= 3) {
-    if (
-      (window.innerHeight + window.scrollY) >= document.body.offsetHeight &&
-      loadScroll == false
-    ) {
-      loadScroll = true;
-      await loadMore();
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      if (currentPokemon["name"] != currentList) {
+        await loadMore();
+        setTimeout(loadMore, 80000);
+      }
     }
   }
-  setTimeout(() => {
-    loadScroll = false;
-  }, 2500);
 };
