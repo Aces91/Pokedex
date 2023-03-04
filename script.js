@@ -4,6 +4,7 @@ let typeColor1;
 let typeColor2;
 let type2;
 let currentList = [];
+let allPokemon = [];
 const stats = ["hp", "attack", "defense", "specAttack", "specDefense", "speed"];
 let pokemonStart = 1;
 let pokemonEnd = 50;
@@ -16,6 +17,17 @@ let loadScroll = false;
 function init() {
   document.getElementById("pokeContent").innerHTML = "";
   renderPokemonOverview();
+  loadAllPokemon();
+}
+
+async function loadAllPokemon() {
+  for (let i = 1; i < maxPokemon; i++) {
+    let url = `https://pokeapi.co/api/v2/pokemon/${[i]}`;
+    let response = await fetch(url);
+    let currentPokemon = await response.json();
+
+    currentPokemon.push(currentPokemon);
+  }
 }
 
 /**
@@ -26,10 +38,9 @@ async function loadPokemon(i) {
   let response = await fetch(url);
   currentPokemon = await response.json();
 
+  currentList.push(currentPokemon);
   await pokemonTypeColor();
   await showPokemon();
-
-  currentList.push(currentPokemon);
 }
 
 async function renderPokemonOverview() {
@@ -99,19 +110,6 @@ async function showDetail(i) {
     currentPokemon,
     currentColor
   );
-}
-
-/**
- * TODO - currently not working
- */
-function renderIdWithleadingZero() {
-  if (currentPokemon["id"] < 10) {
-    document.getElementById("pokeId").innerHTML = "#00" + currentPokemon["id"];
-  } else if (currentPokemon["id"] < 100 && currentPokemon["id"] >= 10) {
-    document.getElementById("pokeId").innerHTML = "#0" + currentPokemon["id"];
-  } else {
-    document.getElementById("pokeId").innerHTML = "#" + currentPokemon["id"];
-  }
 }
 
 /**
@@ -191,11 +189,11 @@ function next(i) {
   }
 }
 
-function filterNames() {
+async function filterNames() {
   let search = document.getElementById("search").value;
   search = search.toLowerCase();
 
-  searching(search);
+  await searching(search);
 }
 
 /**
@@ -203,7 +201,7 @@ function filterNames() {
  * Local Array is filled by first load
  * @param {string} search
  */
-function searching(search) {
+async function searching(search) {
   document.getElementById("pokeContent").innerHTML = "";
   for (let i = 0; i < currentList.length; i++) {
     currentPokemon = currentList[i];
@@ -232,14 +230,3 @@ async function loadMore() {
   }
   await renderPokemonOverview();
 }
-
-window.onscroll = async function () {
-  if (document.getElementById("search").value <= 3) {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      if (currentPokemon["name"] != currentList) {
-        await loadMore();
-        setTimeout(loadMore, 80000);
-      }
-    }
-  }
-};
